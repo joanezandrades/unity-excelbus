@@ -46,7 +46,36 @@ class UnityExcelbus {
      */
     private function __construct()
     {
+        # Add plugin from menu panel
+        add_action('admin_menu', array($this, 'create_menu_panel'));
     }
 
-    
+
+    /**
+     * Function create_menu_panel
+     */
+    public function create_menu_panel()
+    {
+        # Settings
+        $page_title = 'Unity Excelbus';
+        $menu_title = 'Unity Excelbus';
+        $menu_slug  = PREFIX;
+        $icon_url   = '';
+        $position   = 10;
+
+        add_menu_page($page_title, $menu_title, 'administrator', $menu_slug, 'UnityExcelbus::page_home', $icon_url, $position);
+    }
+
+
+
+    /**
+     * Function page_home plugin
+     */
+    public function page_home()
+    {
+        echo 'Olá';
+    }
+
 }
+
+UnityExcelbus::start();
