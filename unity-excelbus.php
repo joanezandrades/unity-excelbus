@@ -10,7 +10,43 @@
  * Text domain: unex
  * License: GPL2
 */
-if (!defined('ABSPATH'))
-{
+if (!defined('ABSPATH')) :
     exit;
+endif;
+
+/**
+ * Constants
+ */
+define('TEXT_DOMAIN', 'unity_excelbus');
+define('PREFIX', 'unex');
+
+/**
+ * Load archives
+ */
+require_once(plugin_dir_path(__FILE__) . '/entities/PHPExcel.php');
+
+
+/**
+ * Class UnityExcelbus
+ */
+class UnityExcelbus {
+    private static $instance;
+
+    public static function start()
+    {
+        if (self::$instance == NULL) :
+            self::$instance == new self();
+        endif;
+
+        return self::$instance;
+    }
+
+    /**
+     * Construct class for hooks and enqueue scripts
+     */
+    private function __construct()
+    {
+    }
+
+    
 }
