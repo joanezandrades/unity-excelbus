@@ -48,6 +48,33 @@ class UnityExcelbus {
     {
         # Add plugin from menu panel
         add_action('admin_menu', array($this, 'create_menu_panel'));
+
+        # Enqueue scripts
+        add_action('admin_enqueue_scripts', array($this, 'register_and_enqueue_scripts'));
+    }
+
+
+    /**
+     * Function register_and_enqueue_scripts
+     * Register and enqueue scripts & styles
+     */
+    public function register_and_enqueue_scripts()
+    {
+        # Register dependencies js
+        wp_register_script('jquery', plugins_url() . '/unity-excelbus/js/jquery-3.4.1.min.js', array(), false);
+        wp_register_script('jquery-ui', plugins_url() . '/unity-excelbus/js/jquery-ui.min.js', array('jquery'), false);
+        wp_register_script('rest-uploader', plugins_url() . '/unity-excelbus/js/upload-rest.js', array('jquery'), false);
+
+        # Enqueue JS
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui');
+
+        # Enqueue Upload js with rest api and nonce token
+        $upload_vars = array(
+            'endpoint'  => esc_url_raw(rest_url('/wp/v2/media/')),
+            'nonce'     => wp_create_nonce('wp_rest')
+        );
+        wp_localize_script('rest-uploader', 'RestVars', $upload_vars);
     }
 
 
